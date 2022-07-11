@@ -27,17 +27,33 @@ function checkForTask(e) {
 
       li.appendChild(link);
       taskList.appendChild(li);
+
+      addTaskToLocalStorage(taskInput.value);
+
       taskInput.value = "";
    }
 
    e.preventDefault();
 }
 
+function addTaskToLocalStorage(task) {
+   let tasks = [];
+   if (localStorage.getItem("tasks") === null) {
+      tasks = [];
+   } else {
+      tasks = JSON.parse(localStorage.getItem("tasks"));
+   }
+
+   tasks.push(task);
+
+   localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
 function removeTask(e) {
    if (e.target.parentElement.classList.contains("delete-item")) {
-      // if (confirm("Are you sure?")) {
-      e.target.parentElement.parentElement.remove();
-      // }
+      if (confirm("Are you sure?")) {
+         e.target.parentElement.parentElement.remove();
+      }
    }
 }
 
